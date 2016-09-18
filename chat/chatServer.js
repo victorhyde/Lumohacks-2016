@@ -6,7 +6,7 @@
 // General
 // ***************************************************************************
 
-var conf = { 
+var conf = {
     port: 8888,
     debug: false,
     dbPort: 6379,
@@ -80,7 +80,7 @@ app.get('/', function(req, res) {
 app.post('/api/broadcast/', requireAuthentication, function(req, res) {
     sendBroadcast(req.body.msg);
     res.send(201, "Message sent to all rooms");
-}); 
+});
 
 // ***************************************************************************
 // Socket.io events
@@ -103,8 +103,8 @@ io.sockets.on('connection', function(socket) {
     // Confirm subscription to user
     socket.emit('subscriptionConfirmed', {'room':conf.mainroom});
     // Notify subscription to all users in room
-    var data = {'room':conf.mainroom, 'username':'anonymous', 'msg':'----- Joined the room -----', 'id':socket.id};
-    io.to(conf.mainroom).emit('userJoinsRoom', data);
+    // var data = {'room':conf.mainroom, 'username':'anonymous', 'msg':'----- Joined the room -----', 'id':socket.id};
+    // io.to(conf.mainroom).emit('userJoinsRoom', data);
 
     // User wants to subscribe to [data.rooms]
     socket.on('subscribe', function(data) {
@@ -119,7 +119,7 @@ io.sockets.on('connection', function(socket) {
 
                 // Confirm subscription to user
                 socket.emit('subscriptionConfirmed', {'room': room});
-        
+
                 // Notify subscription to all users in room
                 var message = {'room':room, 'username':username, 'msg':'----- Joined the room -----', 'id':socket.id};
                 io.to(room).emit('userJoinsRoom', message);
@@ -131,16 +131,16 @@ io.sockets.on('connection', function(socket) {
     socket.on('unsubscribe', function(data) {
         // Get user info from db
         db.hget([socket.id, 'username'], function(err, username) {
-        
+
             // Unsubscribe user from chosen rooms
             _.each(data.rooms, function(room) {
                 if (room != conf.mainroom) {
                     socket.leave(room);
                     logger.emit('newEvent', 'userLeavesRoom', {'socket':socket.id, 'username':username, 'room':room});
-                
+
                     // Confirm unsubscription to user
                     socket.emit('unsubscriptionConfirmed', {'room': room});
-        
+
                     // Notify unsubscription to all users in room
                     var message = {'room':room, 'username':username, 'msg':'----- Left the room -----', 'id': socket.id};
                     io.to(room).emit('userLeavesRoom', message);
@@ -205,10 +205,10 @@ io.sockets.on('connection', function(socket) {
 
     // Clean up on disconnect
     socket.on('disconnect', function() {
-        
+
         // Get current rooms of user
         var rooms = socket.rooms;
-        
+
         // Get user info from db
         db.hgetall(socket.id, function(err, obj) {
             if (err) return logger.emit('newEvent', 'error', err);
@@ -222,7 +222,7 @@ io.sockets.on('connection', function(socket) {
                 }
             });
         });
-    
+
         // Delete user from db
         db.del(socket.id, redis.print);
     });

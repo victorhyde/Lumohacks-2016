@@ -9,7 +9,7 @@
     // ***************************************************************************
     // Socket.io events
     // ***************************************************************************
-    
+
     var socket = io.connect(window.location.host);
 
     // Connection established
@@ -39,7 +39,7 @@
         var info = {'room':'MainRoom', 'username':'ServerBot', 'msg':'----- Lost connection to server -----'};
         addMessage(info);
     });
-    
+
     // Reconnected to server
     socket.on('reconnect', function (data) {
         var info = {'room':'MainRoom', 'username':'ServerBot', 'msg':'----- Reconnected to server -----'};
@@ -72,7 +72,7 @@
         console.log("userJoinsRoom: %s", JSON.stringify(data));
         // Log join in conversation
         addMessage(data);
-    
+
         // Add user to connected users list
         addUser(data);
     });
@@ -113,19 +113,20 @@
         updateNickname(data);
 
         msg = '----- ' + data.oldUsername + ' is now ' + data.newUsername + ' -----';
-        var info = {'room':data.room, 'username':'ServerBot', 'msg':msg};
+        msg = '----- Joined the room -----';
+        var info = {'room':data.room, 'username':getNickname(), 'msg':msg};
         addMessage(info);
     });
 
     // ***************************************************************************
     // Templates and helpers
     // ***************************************************************************
-    
+
     var templates = {};
     var getTemplate = function(path, callback) {
         var source;
         var template;
- 
+
         // Check first if we've the template cached
         if (_.has(templates, path)) {
             if (callback) callback(templates[path]);
@@ -161,7 +162,7 @@
     var addRoom = function(room) {
         getTemplate('js/templates/room.handlebars', function(template) {
             $('#rooms').append(template({'room':room}));
-        
+
             // Toogle to created room
             var newroomtab = '[href="#'+room+'"]';
             $(newroomtab).click();
@@ -170,7 +171,7 @@
             socket.emit('getUsersInRoom', {'room':room});
         });
     };
-    
+
     // Remove room
     var removeRoom = function(room) {
         var room_id = "#"+room;
@@ -184,7 +185,7 @@
             $(room_messages).append(template(msg));
         });
     };
-    
+
     // Add user to connected users list
     var addUser = function(user) {
         getTemplate('js/templates/user.handlebars', function(template) {
@@ -236,6 +237,15 @@
     var getNickname = function() {
         var nickname = $('#nickname').val();
         $('#nickname').val("");
+
+        if(window.currentUser === undefined) {
+            window.currentUser = JSON.parse($.cookie('currentUser'));
+        }
+
+        if(window.currentUser) {
+            return window.currentUser.name;
+        }
+
         return nickname;
     };
 
@@ -263,7 +273,7 @@
 
         if (roomName) {
             eventObject.preventDefault();
-            socket.emit('subscribe', {'rooms':[roomName]}); 
+            socket.emit('subscribe', {'rooms':[roomName]});
 
         // Added error class if empty room name
         } else {
@@ -276,7 +286,7 @@
         eventObject.preventDefault();
         var currentRoom = getCurrentRoom();
         if (currentRoom != 'MainRoom') {
-            socket.emit('unsubscribe', {'rooms':[getCurrentRoom()]}); 
+            socket.emit('unsubscribe', {'rooms':[getCurrentRoom()]});
 
             // Toogle to MainRoom
             $('[href="#MainRoom"]').click();
@@ -300,6 +310,13 @@
         // Close modal if opened
         $('#modal_setnick').modal('hide');
     });
+
+    // set nickname and send profile
+    socket.emit('setNickname', {'username': getNickname()});
+
+    let currentUser = window.currentUser;
+    let msg = `name: ${currentUser.name}     age: ${currentUser.age}     gender: ${currentUser.gender}     cancer: ${currentUser.cancer}`
+    socket.emit('newMessage', {'room': getCurrentRoom(), 'msg': msg});
 
 })();
 
