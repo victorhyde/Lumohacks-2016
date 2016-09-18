@@ -159,7 +159,7 @@ h5 {
 
 h6 {
     margin: 0;
-    font-size: 1.125em;
+    /*font-size: 1.125em;*/
     line-height: 1.3333333333333333333333333333333em;
     margin-bottom: 1.3333333333333333333333333333333em
 }

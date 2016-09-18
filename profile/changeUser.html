@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Nishok Mohan - Full-Stack Software Developer - Grad Student</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-144x144-precomposed.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.js"></script>
+    <script>
+    window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')
+    </script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+    <script src="js/vendor/jquery.hashchange.min.js"></script>
+    <script src="js/vendor/jquery.easytabs.min.js"></script>
+    <script src="js/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script>window.html5 || document.write('<script src="js/vendor/html5shiv.js"><\/script>')</script>
+      <![endif]-->
+</head>
+
+<body class="bg-fixed">
+    <div class="main-container">
+        <div class="item-box clearfix" id="cookie-setUser_1">
+            <i class="fa fa-comment-o" aria-hidden="true"></i>
+            <div class="item-data">
+                <h3><a href="">Set User_1</a></h3>
+            </div>
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="item-box clearfix" id="cookie-setUser_2">
+            <i class="fa fa-comment-o" aria-hidden="true"></i>
+            <div class="item-data">
+                <h3><a href="">Set User_2</a></h3>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    let users = [];
+    users[1] = {
+        id: 1,
+        picSrc: 'images/user_1.jpg',
+        name: 'Hugh Mungus',
+        gender: 'male',
+        ethnicity: 'caucasian',
+        age: 35,
+        maritalStatus: 'married',
+        location: 'Vancouver',
+        cancer: 'Brian Tumor',
+        treatment: 'chemotherapy',
+        email: 'hugh_mungus@cancer.ca',
+        introduction: 'My name is Hugh Mungus, and I am a 35-year cancer survivor. In 2003, I was diagnosed with Glioblastoma multiforme, which is one of the deadliest brain tumors to have. My treatment was typical of most cancer patients. The process included 6 months of chemotherapy, 2 weeks of radiation and 2 surgeries. Throughout the journey I would constantly get sick, sometimes so much that I needed to be in isolation. After a year of treatment, I was told to come back in 2 months for my first check-up.'
+    };
+
+    users[2] = {
+        id: 2,
+        picSrc: 'images/user_2.jpg',
+        name: 'ABC',
+        gender: 'female',
+        ethnicity: 'caucasian',
+        age: 10,
+        maritalStatus: 'married',
+        location: 'Vancouver',
+        cancer: 'Brian Tumor',
+        treatment: 'chemotherapy',
+        email: 'hugh_mungus@cancer.ca',
+        introduction: 'My name is Hugh Mungus, and I am a 35-year cancer survivor. In 2003, I was diagnosed with Glioblastoma multiforme, which is one of the deadliest brain tumors to have. My treatment was typical of most cancer patients. The process included 6 months of chemotherapy, 2 weeks of radiation and 2 surgeries. Throughout the journey I would constantly get sick, sometimes so much that I needed to be in isolation. After a year of treatment, I was told to come back in 2 months for my first check-up.'
+    };
+
+    $('#cookie-setUser_1').click(function () {
+        $.cookie('currentUser', JSON.stringify(users[1]), { expires: 7, path: '/' });
+    });
+
+    $('#cookie-setUser_2').click(function () {
+        $.cookie('currentUser', JSON.stringify(users[2]), { expires: 7, path: '/' });
+    });
+
+
+    // set cookie
+    $.cookie('users', JSON.stringify(users), { expires: 7, path: '/' });
+
+
+    // read cookie
+    let currentUser = JSON.parse($.cookie('currentUser'));
+</script>
+
+</html>
