@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<head>
+<script name ="registration" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: #eeeeee;
+  font-family: 'Roboto', sans-serif;">
+	<div style="width:60%; margin:0 auto;">
+		<h1>Register a new Profile</h1>
+<form enctype="application/json" id="registration">
+    <div>
+        <label for="name">Cancer Type:</label>
+        <input type="text" id="name" class="form-control" name="user_name" />
+    </div>
+    <div>
+        <label for="mail">Gender:</label>
+        <input type="text" id="mail" class="form-control" name="user_mail" />
+    </div>
+    <div>
+        <label for="Age">Age:</label>
+        <input type="text" id="Age" class="form-control" name="user_message"/>
+    </div>
+	<div>
+        <label for="treatment">Treatment:</label>
+        <input type="text" id="treatment" class="form-control" name="user_message"/>
+    </div>
+	<div>
+        <label for="ethnicity">Ethnicity:</label>
+        <input type="text" id="ethnicity" class="form-control" name="user_message"/>
+    </div>
+	<div>
+        <label for="marital">Marital Status:</label>
+        <input type="text" id="marital" class="form-control" name="user_message"/>
+    </div>
+	<div>
+        <label for="location">Location:</label>
+        <input type="text" id="location" class="form-control" name="user_message"/>
+    </div>
+	<div>
+        <label for="intro">Give a quick introduction:</label>
+		<textarea id="intro" class="form-control" name="user_message" style="height:200px"></textarea>
+    </div>
+	<div>
+        <a id="register" href="messages.html">Register</a>
+    </div>
+</form>
+	</div>
+	<script>
+	$(document).ready(function() {
+    $("#register").click(function(){
+		console.log($("#registration").serializeArray())
+        var formData = JSON.stringify($("#registration").serializeArray());
+		$.cookie('data', JSON.stringify(formData), { expires: 7, path: '/' });
+		
+    }); 
+});</script>
+</body>
