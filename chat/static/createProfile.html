@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<head>
+<script name ="registration" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: #eeeeee;
+  font-family: 'Roboto', sans-serif;">
+	<div style="width:60%; margin:0 auto;">
+		<h1>Register a new Profile</h1>
+<form enctype="application/json" id="registration">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" class="form-control" name="name" />
+    </div>
+    <div>
+        <label for="cancer">Cancer Type:</label>
+        <input type="text" id="cancer" class="form-control" name="cancer" />
+    </div>
+    <div>
+        <label for="gender">Gender:</label>
+        <input type="text" id="gender" class="form-control" name="gender" />
+    </div>
+    <div>
+        <label for="age">Age:</label>
+        <input type="text" id="age" class="form-control" name="age"/>
+    </div>
+	<div>
+        <label for="treatment">Treatment:</label>
+        <input type="text" id="treatment" class="form-control" name="treatment"/>
+    </div>
+	<div>
+        <label for="ethnicity">Ethnicity:</label>
+        <input type="text" id="ethnicity" class="form-control" name="ethnicity"/>
+    </div>
+	<div>
+        <label for="maritalStatus">Marital Status:</label>
+        <input type="text" id="maritalStatus" class="form-control" name="maritalStatus"/>
+    </div>
+	<div>
+        <label for="location">Location:</label>
+        <input type="text" id="location" class="form-control" name="location"/>
+    </div>
+	<div>
+        <label for="introduction">Give a quick introduction:</label>
+		<textarea id="introduction" class="form-control" name="introduction" style="height:200px"></textarea>
+    </div>
+	<div>
+        <a id="register" href="/index.html">Register</a>
+    </div>
+</form>
+	</div>
+	<script>
+	$(document).ready(function() {
+    $("#register").click(function(){
+        let data = {};
+        let formData = $("#registration").serializeArray();
+        formData.forEach(item => {
+            data[item.name] = item.value;
+        });
+		$.cookie('currentUser', JSON.stringify(data), { expires: 7, path: '/' });
+    });
+});</script>
+</body>
